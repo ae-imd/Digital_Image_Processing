@@ -32,7 +32,7 @@ def add_Gauss_noise(img, sigma: float, a: float):
     if img is None:
         raise ValueError('img is None')
     if sigma <= 0:
-        raise ValueError('sigma less than zero')
+        raise ValueError('sigma is less than or equal to zero')
 
     mask = np.random.normal(a, sigma, img.shape)
     noise = img.astype(np.float64) + mask
@@ -58,15 +58,27 @@ def add_impulse_noise(img, noise_prob: float):
 def add_uniform_noise(img, beg: float, end: float):
     mask = np.random.uniform(beg, end, img.shape)
     noise = img.astype(np.float64) + mask
-    return np.clip(noise, 0, 256).astype(np.uint8)
+    return np.clip(noise, 0, 255).astype(np.uint8)
 
 def add_Rayleigh_noise(img, sigma: float):
     if img is None:
         raise ValueError('img is None')
     if sigma <= 0:
-        raise ValueError('sigma less than zero')
+        raise ValueError('sigma is less than or equal to zero')
     
     mask = np.clip(np.random.rayleigh(sigma, img.shape), 0, 256)
     noise = img.astype(np.float64) * (1 + mask)
     # Plus one is needed to account for the original image
+    return np.clip(noise, 0, 255).astype(np.uint8)
+
+def add_Poisson_noise(img, photons_max: int):
+    if img is None:
+        raise ValueError('img is None')
+    if photons_max < 0:
+        raise ValueError('photons_max is less than zero')
+    
+    # photons_max - amount of photons on a pixel with value 255
+
+    lambda_: float = img.astype(np.float64) / 255 * photons_max
+    noise = np.random.poisson(lambda_) / photons_max * 255
     return np.clip(noise, 0, 255).astype(np.uint8)
