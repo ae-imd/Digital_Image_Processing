@@ -29,6 +29,28 @@ def add_salt_pepper_noise(img, salt_prob: float, pepper_prob: float):
     return noise
 
 def add_Gauss_noise(img, sigma: float, a: float):
+    if img is None:
+        raise ValueError('img is None')
+    if sigma <= 0:
+        raise ValueError('sigma less than zero')
+
     mask = np.random.normal(a, sigma, img.shape)
     noise = img.astype(np.float64) + mask
     return np.clip(noise, 0, 255).astype(np.uint8)
+
+def add_impulse_noise(img, noise_prob: float):
+    if img is None:
+        raise ValueError('img is None')
+    if noise_prob < 0 or noise_prob > 1:
+        raise ValueError('noise_prob is out of range')
+
+    noise = np.copy(img)
+    area = np.random.random(noise.shape[:2]) < noise_prob
+    amount = np.sum(area)
+    if len(img.shape) == 3:
+        rnd_vals = np.random.randint(0, 256, (amount, 3))
+    else:
+        rnd_vals = np.random.randint(0, 256, amount)
+
+    noise[area] = rnd_vals
+    return noise
