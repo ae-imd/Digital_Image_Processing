@@ -27,3 +27,8 @@ def add_salt_pepper_noise(img, salt_prob: float, pepper_prob: float):
         noise[pepper] = 0
 
     return noise
+
+def add_Gauss_noise(img, sigma: float, a: float):
+    mask = np.random.normal(a, sigma, img.shape)
+    noise = img.astype(np.float64) + mask
+    return np.clip(noise, 0, 255).astype(np.uint8)
