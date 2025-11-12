@@ -4,7 +4,7 @@ import os
 
 def main() -> None:
     
-    path: str = '..\Digital_Image_Processing\data\dog.jpg'
+    path: str = '..\Digital_Image_Processing\data\cat.jpg'
     img = cv2.imread(path)
 
     if img is None:
@@ -14,8 +14,9 @@ def main() -> None:
     cv2.imshow('Source Image', img)
 
     cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
-    noise = ng.add_uniform_noise(img, 100, 200)
+    noise = ng.add_Rayleigh_noise(img, 0.7)
 
     cv2.namedWindow('Noise Image')
     cv2.imshow('Noise Image', noise)

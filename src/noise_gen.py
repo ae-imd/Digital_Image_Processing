@@ -59,3 +59,14 @@ def add_uniform_noise(img, beg: float, end: float):
     mask = np.random.uniform(beg, end, img.shape)
     noise = img.astype(np.float64) + mask
     return np.clip(noise, 0, 256).astype(np.uint8)
+
+def add_Rayleigh_noise(img, sigma: float):
+    if img is None:
+        raise ValueError('img is None')
+    if sigma <= 0:
+        raise ValueError('sigma less than zero')
+    
+    mask = np.clip(np.random.rayleigh(sigma, img.shape), 0, 256)
+    noise = img.astype(np.float64) * (1 + mask)
+    # Plus one is needed to account for the original image
+    return np.clip(noise, 0, 255).astype(np.uint8)
