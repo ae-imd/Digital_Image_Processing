@@ -188,6 +188,30 @@ cython_debug/
 #  you could uncomment the following to ignore the entire vscode folder
 # .vscode/
 
+# VSCode
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+# VSCode - specific files that might contain sensitive data
+.vscode/*.key
+.vscode/settings.json.bak
+
+# VSCode - user workspace files
+*.code-workspace.bak
+
+# VSCode - debug files
+*.vscode/launch.json.bak
+
 # Ruff stuff:
 .ruff_cache/
 
