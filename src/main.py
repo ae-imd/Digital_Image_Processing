@@ -15,7 +15,7 @@ def main() -> None:
 
     cv2.waitKey(0)
 
-    noise = ng.add_salt_pepper_noise(img, 0.1, 0.4)
+    noise = ng.add_uniform_noise(img, 100, 200)
 
     cv2.namedWindow('Noise Image')
     cv2.imshow('Noise Image', noise)

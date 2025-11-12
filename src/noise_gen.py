@@ -54,3 +54,8 @@ def add_impulse_noise(img, noise_prob: float):
 
     noise[area] = rnd_vals
     return noise
+
+def add_uniform_noise(img, beg: float, end: float):
+    mask = np.random.uniform(beg, end, img.shape)
+    noise = img.astype(np.float64) + mask
+    return np.clip(noise, 0, 256).astype(np.uint8)
